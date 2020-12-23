@@ -31,7 +31,7 @@
                 .get(`/api/book/edit/${this.$route.params.id}`)
                 .then((response) => {
                     this.book = response.data;
-                    // console.log(response.data);
+                    console.log(this.book);
                 });
         },
         methods: {

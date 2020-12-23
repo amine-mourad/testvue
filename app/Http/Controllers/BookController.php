@@ -17,13 +17,24 @@ class BookController extends Controller
     // add book
     public function add(Request $request)
     {
-        $book = new Book([
-            'name' => $request->input('name'),
-            'author' => $request->input('author')
-        ]);
-        $book->save();
+        // $book = new Book([
+        //     'name' => $request->input('name'),
+        //     'author' => $request->input('author')
+        // ]);
+        $books = json_decode($request->getContent() , true);
 
-        return response()->json('The book successfully added');
+        foreach( $books as $book )
+        {
+            Book::create([
+            'name' => $book['name'],
+            'author' => $book['author'],
+        ]);
+        }
+
+        // $books->save();
+
+        // return response()->json('The book successfully added');
+
     }
 
     // edit book

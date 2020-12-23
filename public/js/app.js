@@ -1962,10 +1962,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      book: {}
+      book: [{
+        name: "",
+        author: ""
+      }]
     };
   },
   methods: {
@@ -1982,6 +1992,16 @@ __webpack_require__.r(__webpack_exports__);
       })["finally"](function () {
         return _this.loading = false;
       });
+      console.log(this.book);
+    },
+    addItem: function addItem() {
+      this.book.push({
+        name: "",
+        author: ""
+      });
+    },
+    removeItem: function removeItem(index) {
+      this.book.splice(index, 1);
     }
   }
 });
@@ -2103,7 +2123,8 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.axios.get("/api/book/edit/".concat(this.$route.params.id)).then(function (response) {
-      _this.book = response.data; // console.log(response.data);
+      _this.book = response.data;
+      console.log(_this.book);
     });
   },
   methods: {
@@ -19875,20 +19896,13 @@ var render = function() {
   return _c("div", [
     _c("h3", { staticClass: "text-center" }, [_vm._v("Add Book")]),
     _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-6" }, [
-        _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.addBook($event)
-              }
-            }
-          },
-          [
-            _c("div", { staticClass: "form-group" }, [
+    _c(
+      "div",
+      { staticClass: "row" },
+      [
+        _vm._l(_vm.book, function(bok, index) {
+          return _c("div", { key: index, staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "form-group col-md-6" }, [
               _c("label", [_vm._v("Name")]),
               _vm._v(" "),
               _c("input", {
@@ -19896,25 +19910,25 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.book.name,
-                    expression: "book.name"
+                    value: bok.name,
+                    expression: "bok.name"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text" },
-                domProps: { value: _vm.book.name },
+                domProps: { value: bok.name },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.book, "name", $event.target.value)
+                    _vm.$set(bok, "name", $event.target.value)
                   }
                 }
               })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
+            _c("div", { staticClass: "form-group col-md-5" }, [
               _c("label", [_vm._v("Author")]),
               _vm._v(" "),
               _c("input", {
@@ -19922,33 +19936,76 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.book.author,
-                    expression: "book.author"
+                    value: bok.author,
+                    expression: "bok.author"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text" },
-                domProps: { value: _vm.book.author },
+                domProps: { value: bok.author },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.book, "author", $event.target.value)
+                    _vm.$set(bok, "author", $event.target.value)
                   }
                 }
               })
             ]),
             _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-1" }, [
+              _c("label", [_vm._v("Remove")]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  on: {
+                    click: function($event) {
+                      return _vm.removeItem(index)
+                    }
+                  }
+                },
+                [_vm._v("X")]
+              )
+            ])
+          ])
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "form-group col-md-1" }, [
             _c(
               "button",
-              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              {
+                staticClass: "btn btn-success",
+                on: {
+                  click: function($event) {
+                    return _vm.addItem()
+                  }
+                }
+              },
+              [_vm._v("add")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "submit" },
+                on: {
+                  click: function($event) {
+                    return _vm.addBook()
+                  }
+                }
+              },
               [_vm._v("Add Book")]
             )
-          ]
-        )
-      ])
-    ])
+          ])
+        ])
+      ],
+      2
+    )
   ])
 }
 var staticRenderFns = []
